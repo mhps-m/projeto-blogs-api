@@ -5,7 +5,7 @@ const { validateNewUser } = require('./validations/validations');
 const getAll = async () => User.findAll();
 
 const getById = async (id) => {
-  const user = User.findByPk(id);
+  const user = await User.findByPk(id);
 
   if (!user) throw new HttpErrors(404, 'User does not exist');
 

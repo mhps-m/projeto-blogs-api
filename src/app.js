@@ -18,6 +18,7 @@ app.use(express.json());
 app.post('/login', routes.login);
 app.post('/user', routes.createUser);
 app.get('/user', validateJWT, routes.getUsers);
+app.get('/user/:id', validateJWT, routes.getUserById);
 
 app.use(errorHandler);
 // É importante exportar a constante `app`,
