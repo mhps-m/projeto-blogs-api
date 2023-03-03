@@ -1,6 +1,6 @@
 const express = require('express');
 require('express-async-errors');
-const { errorHandler } = require('./middlewares');
+const { errorHandler, validateJWT } = require('./middlewares');
 const routes = require('./routes');
 // ...
 
@@ -17,6 +17,7 @@ app.use(express.json());
 
 app.post('/login', routes.login);
 app.post('/user', routes.createUser);
+app.get('/user', validateJWT, routes.getUsers);
 
 app.use(errorHandler);
 // É importante exportar a constante `app`,

@@ -2,6 +2,8 @@ const HttpErrors = require('http-errors');
 const { User } = require('../models');
 const { validateNewUser } = require('./validations/validations');
 
+const getAll = async () => User.findAll();
+
 const getById = async (id) => {
   const user = User.findByPk(id);
 
@@ -27,6 +29,7 @@ const createUser = async (userData) => {
 };
 
 module.exports = {
+  getAll,
   getById,
   createUser,
 };
