@@ -1,7 +1,7 @@
 const express = require('express');
 require('express-async-errors');
 const { errorHandler } = require('./middlewares');
-const { loginController } = require('./controllers');
+const routes = require('./routes');
 // ...
 
 const app = express();
@@ -15,7 +15,8 @@ app.use(express.json());
 
 // ...
 
-app.post('/login', loginController);
+app.post('/login', routes.login);
+app.post('/user', routes.createUser);
 
 app.use(errorHandler);
 // É importante exportar a constante `app`,
