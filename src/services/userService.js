@@ -2,10 +2,18 @@ const HttpErrors = require('http-errors');
 const { User } = require('../models');
 const { validateNewUser } = require('./validations/validations');
 
-const getAll = async () => User.findAll();
+const getAll = async () => User.findAll({
+  attributes: {
+    exclude: ['password'],
+  },
+});
 
 const getById = async (id) => {
-  const user = await User.findByPk(id);
+  const user = await User.findByPk(id, {
+    attributes: {
+      exclude: ['password'],
+    },
+  });
 
   if (!user) throw new HttpErrors(404, 'User does not exist');
 
