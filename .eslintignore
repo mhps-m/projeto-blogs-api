@@ -1,4 +1,4 @@
 /__tests__
-**/migrations/
-**/seeders/
-**/models/
+# **/migrations/
+# **/seeders/
+# **/models/
