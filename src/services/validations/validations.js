@@ -1,5 +1,5 @@
 const HttpErrors = require('http-errors');
-const { newUserSchema } = require('./schemas');
+const { newUserSchema, newCategorySchema } = require('./schemas');
 
 const validateNewUser = (user) => {
   const { error } = newUserSchema.validate(user);
@@ -9,6 +9,15 @@ const validateNewUser = (user) => {
   }
 };
 
+const validateNewCategory = (category) => {
+  const { error } = newCategorySchema.validate(category);
+
+  if (error) {
+    throw new HttpErrors(400, error.message);
+  }
+};
+
 module.exports = {
   validateNewUser,
+  validateNewCategory,
 };
