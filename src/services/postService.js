@@ -2,12 +2,15 @@ const Sequelize = require('sequelize');
 const HttpErrors = require('http-errors');
 const { BlogPost, PostCategory, Category, User } = require('../models');
 const categoryService = require('./categoryService');
-const { validateNewPost, validateUpdatePost } = require('./validations/validations');
+const { newPost, updatePost } = require('./validations/schemas');
+const validate = require('./validations/validate');
 const config = require('../config/config');
 
 const env = process.env.NODE_ENV || 'development';
 
 const sequelize = new Sequelize(config[env]);
+
+const missingFieldsError = 'Some required fields are missing';
 
 const checkCategories = async (categoryIds) => (
   Promise.all(categoryIds.map((id) => (
@@ -22,7 +25,7 @@ const checkUserIsAuthor = (post, userId) => {
 };
 
 const createPost = async (postData, userId) => {
-  validateNewPost(postData);
+  validate(newPost, postData, missingFieldsError);
   const { title, content, categoryIds } = postData;
 
   await checkCategories(categoryIds);
@@ -67,7 +70,7 @@ const getById = async (id) => {
 };
 
 const update = async (postId, updates, userId) => {
-  validateUpdatePost(updates);
+  validate(updatePost, updates, missingFieldsError);
   
   const postToUpdate = await getById(postId);
 

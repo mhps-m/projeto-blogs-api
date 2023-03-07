@@ -1,30 +1,30 @@
 const Joi = require('joi');
 
-const newUserSchema = Joi.object().keys({
+const newUser = Joi.object().keys({
   displayName: Joi.string().min(8).required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
   image: Joi.string(),
 }).required();
 
-const newCategorySchema = Joi.object().keys({
+const newCategory = Joi.object().keys({
   name: Joi.string().required(),
 }).required();
 
-const newPostSchema = Joi.object().keys({
+const newPost = Joi.object().keys({
   title: Joi.string().required(),
   content: Joi.string().required(),
   categoryIds: Joi.array().required(),
 });
 
-const updatePostSchema = Joi.object().keys({
+const updatePost = Joi.object().keys({
   title: Joi.string().required(),
   content: Joi.string().required(),
 });
 
 module.exports = {
-  newUserSchema,
-  newCategorySchema,
-  newPostSchema,
-  updatePostSchema,
+  newUser,
+  newCategory,
+  newPost,
+  updatePost,
 };

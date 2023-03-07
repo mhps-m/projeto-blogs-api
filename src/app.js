@@ -1,7 +1,7 @@
 const express = require('express');
 require('express-async-errors');
 const { errorHandler, validateJWT } = require('./middlewares');
-const routes = require('./routes');
+const routes = require('./controllers');
 // ...
 
 const app = express();

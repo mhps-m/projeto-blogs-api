@@ -1,13 +1,14 @@
 const HttpErrors = require('http-errors');
 const { Category } = require('../models');
-const { validateNewCategory } = require('./validations/validations');
+const { newCategory } = require('./validations/schemas');
+const validate = require('./validations/validate');
 
 const createCategory = async (categoryData) => {
-  validateNewCategory(categoryData);
+  validate(newCategory, categoryData);
 
-  const newCategory = await Category.create(categoryData);
+  const category = await Category.create(categoryData);
 
-  return newCategory;
+  return category;
 };
 
 const getAll = async () => Category.findAll();

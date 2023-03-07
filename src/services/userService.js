@@ -1,6 +1,7 @@
 const HttpErrors = require('http-errors');
 const { User } = require('../models');
-const { validateNewUser } = require('./validations/validations');
+const { newUser } = require('./validations/schemas');
+const validate = require('./validations/validate');
 
 const getAll = async () => User.findAll({
   attributes: {
@@ -21,7 +22,7 @@ const getById = async (id) => {
 };
 
 const createUser = async (userData) => {
-  validateNewUser(userData);
+  validate(newUser, userData);
 
   const checkExistingUser = await User.findOne({
     where: { email: userData.email },
@@ -31,9 +32,9 @@ const createUser = async (userData) => {
     throw new HttpErrors(409, 'User already registered');
   }
 
-  const newUser = await User.create(userData);
+  const user = await User.create(userData);
 
-  return newUser;
+  return user;
 };
 
 module.exports = {
