@@ -5,6 +5,7 @@ const getUserById = require('./controllers/getUserById');
 const createCategory = require('./controllers/createCategory');
 const getCategories = require('./controllers/getCategories');
 const createPost = require('./controllers/createPost');
+const getPosts = require('./controllers/getPosts');
 
 module.exports = {
   login,
@@ -14,4 +15,5 @@ module.exports = {
   createCategory,
   getCategories,
   createPost,
+  getPosts,
 };

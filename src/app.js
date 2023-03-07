@@ -22,6 +22,7 @@ app.get('/user/:id', validateJWT, routes.getUserById);
 app.post('/categories', validateJWT, routes.createCategory);
 app.get('/categories', validateJWT, routes.getCategories);
 app.post('/post', validateJWT, routes.createPost);
+app.get('/post', validateJWT, routes.getPosts);
 
 app.use(errorHandler);
 // É importante exportar a constante `app`,
