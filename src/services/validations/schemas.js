@@ -17,8 +17,14 @@ const newPostSchema = Joi.object().keys({
   categoryIds: Joi.array().required(),
 });
 
+const updatePostSchema = Joi.object().keys({
+  title: Joi.string().required(),
+  content: Joi.string().required(),
+});
+
 module.exports = {
   newUserSchema,
   newCategorySchema,
   newPostSchema,
+  updatePostSchema,
 };

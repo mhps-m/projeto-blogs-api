@@ -3,6 +3,7 @@ const {
   newUserSchema,
   newCategorySchema,
   newPostSchema,
+  updatePostSchema,
 } = require('./schemas');
 
 const validateNewUser = (user) => {
@@ -29,8 +30,17 @@ const validateNewPost = (post) => {
   }
 };
 
+const validateUpdatePost = (updates) => {
+  const { error } = updatePostSchema.validate(updates);
+
+  if (error) {
+    throw new HttpErrors(400, 'Some required fields are missing');
+  }
+};
+
 module.exports = {
   validateNewUser,
   validateNewCategory,
   validateNewPost,
+  validateUpdatePost,
 };

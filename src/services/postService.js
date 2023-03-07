@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const HttpErrors = require('http-errors');
 const { BlogPost, PostCategory, Category, User } = require('../models');
 const categoryService = require('./categoryService');
-const { validateNewPost } = require('./validations/validations');
+const { validateNewPost, validateUpdatePost } = require('./validations/validations');
 const config = require('../config/config');
 
 const env = process.env.NODE_ENV || 'development';
@@ -14,6 +14,12 @@ const checkCategories = async (categoryIds) => (
     categoryService.getById(id)
   )))
 );
+
+const checkUserIsAuthor = (post, userId) => {
+  if (userId !== post.userId) {
+    throw new HttpErrors(401, 'Unauthorized user');
+  }
+};
 
 const createPost = async (postData, userId) => {
   validateNewPost(postData);
@@ -60,8 +66,25 @@ const getById = async (id) => {
   return result;
 };
 
+const update = async (postId, updates, userId) => {
+  validateUpdatePost(updates);
+  
+  const postToUpdate = await getById(postId);
+
+  checkUserIsAuthor(postToUpdate, userId);
+
+  await BlogPost.update(updates, {
+    where: { id: postId },
+  });
+
+  const result = await getById(postId);
+
+  return result;
+};
+
 module.exports = {
   createPost,
   getAll,
   getById,
+  update,
 };
